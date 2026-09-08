@@ -1,0 +1,10 @@
+{
+  "description": "This career networking portal dashboard streamlines job application tracking, helping users manage saved jobs, applications, and profile views efficiently.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
