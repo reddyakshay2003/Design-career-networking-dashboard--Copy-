@@ -1,5 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import { useRouteError, Link } from "react-router-dom";
+import { useState } from "react";
 
 // Layouts
 import CandidateLayout from "../layouts/CandidateLayout";
@@ -40,6 +41,61 @@ import AdvisorDashboard from "../pages/advisor/AdvisorDashboard";
 import EmployerVerification from "../pages/advisor/EmployerVerification";
 import PortfolioAudit from "../pages/advisor/PortfolioAudit";
 
+// --- Inline Advisor Subpages (Zero file-resolution issues) ---
+function CandidateOversight() {
+  const [candidates, setCandidates] = useState([
+    { id: "CAN-101", name: "Akshay Reddy", program: "MSc Computer Science", focus: "Frontend & AI", status: "Active Placement" },
+    { id: "CAN-102", name: "Elena Rostova", program: "BSc Product Design", focus: "UX Engineering", status: "Looking for Placement" },
+  ]);
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto">
+      <h1 className="text-2xl font-extrabold text-slate-900">Candidate Oversight & Management</h1>
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm">
+        <p className="text-sm text-slate-600 mb-4">Supervise student profiles, audit compliance status, and manage platform pathways.</p>
+        <div className="divide-y divide-slate-100">
+          {candidates.map(c => (
+            <div key={c.id} className="py-4 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-slate-900">{c.name} <span className="text-xs text-indigo-600 font-normal">({c.program})</span></p>
+                <p className="text-xs text-slate-500">Focus: {c.focus} • Status: {c.status}</p>
+              </div>
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200">Verified</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PlacementCompliance() {
+  const [placements] = useState([
+    { id: "PLC-301", candidate: "Akshay Reddy", company: "Acme Studios", hours: "37.5 / 40 hrs", state: "Compliant" },
+    { id: "PLC-303", candidate: "Marcus Thorne", company: "Meridian Labs", hours: "28.0 / 40 hrs", state: "Review Required" },
+  ]);
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto">
+      <h1 className="text-2xl font-extrabold text-slate-900">Placement Timesheet & Compliance</h1>
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm">
+        <p className="text-sm text-slate-600 mb-4">Monitor weekly candidate timesheets and enforce institutional placement hour rules.</p>
+        <div className="divide-y divide-slate-100">
+          {placements.map(p => (
+            <div key={p.id} className="py-4 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-slate-900">{p.candidate} at <span className="text-indigo-600">{p.company}</span></p>
+                <p className="text-xs text-slate-500 font-mono">Logged Hours: {p.hours}</p>
+              </div>
+              <span className={`px-3 py-1 text-xs font-bold rounded-full border ${p.state === 'Compliant' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'}`}>
+                {p.state}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // --- Custom Error Boundary ---
 function GlobalErrorFallback() {
   const error = useRouteError() as any;
@@ -67,7 +123,7 @@ function GlobalErrorFallback() {
 export const routes: RouteObject[] = [
   {
     element: <PublicLayout />,
-    errorElement: <GlobalErrorFallback />, // Catches 404s on public routes
+    errorElement: <GlobalErrorFallback />,
     children: [
       { path: "/", element: <Home /> },
       { path: "/opportunities", element: <OpportunitiesHub /> },
@@ -84,10 +140,10 @@ export const routes: RouteObject[] = [
   {
     path: "/candidate",
     element: <CandidateLayout />,
-    errorElement: <GlobalErrorFallback />, // Catches 404s on candidate routes
+    errorElement: <GlobalErrorFallback />,
     children: [
-      { index: true, element: <CandidateDashboard /> }, // Resolves to /candidate
-      { path: "applications", element: <ApplicationTracker /> }, // Resolves to /candidate/applications
+      { index: true, element: <CandidateDashboard /> },
+      { path: "applications", element: <ApplicationTracker /> },
       { path: "portfolio", element: <PortfolioManager /> },
       { path: "cv", element: <CVBuilder /> },
       { path: "timesheets", element: <TimesheetLog /> },
@@ -98,7 +154,7 @@ export const routes: RouteObject[] = [
     element: <EmployerLayout />,
     errorElement: <GlobalErrorFallback />,
     children: [
-      { index: true, element: <EmployerDashboard /> }, // Resolves to /employer
+      { index: true, element: <EmployerDashboard /> },
       { path: "pipeline", element: <CandidatePipeline /> },
       { path: "post", element: <PostOpportunity /> },
       { path: "opportunities", element: <ManageOpportunities /> },
@@ -110,9 +166,11 @@ export const routes: RouteObject[] = [
     element: <AdvisorLayout />,
     errorElement: <GlobalErrorFallback />,
     children: [
-      { index: true, element: <AdvisorDashboard /> }, // Resolves to /advisor
+      { index: true, element: <AdvisorDashboard /> },
       { path: "employers", element: <EmployerVerification /> },
       { path: "portfolios", element: <PortfolioAudit /> },
+      { path: "candidates", element: <CandidateOversight /> },
+      { path: "placements", element: <PlacementCompliance /> },
     ],
   },
 ];
