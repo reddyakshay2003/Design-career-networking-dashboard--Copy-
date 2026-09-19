@@ -43,7 +43,7 @@ import PortfolioAudit from "../pages/advisor/PortfolioAudit";
 
 // --- Inline Advisor Subpages (Zero file-resolution issues) ---
 function CandidateOversight() {
-  const [candidates, setCandidates] = useState([
+  const [candidates] = useState([
     { id: "CAN-101", name: "Akshay Reddy", program: "MSc Computer Science", focus: "Frontend & AI", status: "Active Placement" },
     { id: "CAN-102", name: "Elena Rostova", program: "BSc Product Design", focus: "UX Engineering", status: "Looking for Placement" },
   ]);
@@ -122,19 +122,20 @@ function GlobalErrorFallback() {
 // --- Routes Configuration ---
 export const routes: RouteObject[] = [
   {
+    path: "/",
     element: <PublicLayout />,
     errorElement: <GlobalErrorFallback />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/opportunities", element: <OpportunitiesHub /> },
-      { path: "/opportunities/:opportunityId", element: <SingleOpportunity /> },
-      { path: "/companies", element: <CompaniesDirectory /> },
-      { path: "/showcase", element: <PortfolioShowcase /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <RoleSelection /> },
-      { path: "/register/candidate", element: <CandidateRegister /> },
-      { path: "/register/employer", element: <EmployerRegister /> },
-      { path: "/register/advisor", element: <AdvisorRegister /> },
+      { index: true, element: <Home /> },
+      { path: "opportunities", element: <OpportunitiesHub /> },
+      { path: "opportunities/:opportunityId", element: <SingleOpportunity /> },
+      { path: "companies", element: <CompaniesDirectory /> },
+      { path: "showcase", element: <PortfolioShowcase /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <RoleSelection /> },
+      { path: "register/candidate", element: <CandidateRegister /> },
+      { path: "register/employer", element: <EmployerRegister /> },
+      { path: "register/advisor", element: <AdvisorRegister /> },
     ],
   },
   {
