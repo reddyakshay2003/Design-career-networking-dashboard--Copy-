@@ -26,7 +26,6 @@ import AdvisorRegister from "../pages/auth/AdvisorRegister";
 import CandidateDashboard from "../pages/candidate/CandidateDashboard";
 import ApplicationTracker from "../pages/candidate/ApplicationTracker";
 import PortfolioManager from "../pages/candidate/PortfolioManager";
-import CVBuilder from "../pages/candidate/CVBuilder";
 import TimesheetLog from "../pages/candidate/TimesheetLog";
 
 // Employer Pages
@@ -146,7 +145,6 @@ export const routes: RouteObject[] = [
       { index: true, element: <CandidateDashboard /> },
       { path: "applications", element: <ApplicationTracker /> },
       { path: "portfolio", element: <PortfolioManager /> },
-      { path: "cv", element: <CVBuilder /> },
       { path: "timesheets", element: <TimesheetLog /> },
     ],
   },

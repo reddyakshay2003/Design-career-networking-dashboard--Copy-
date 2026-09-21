@@ -39,15 +39,6 @@ export default function CandidateLayout() {
       ),
     },
     {
-      label: "CV Builder",
-      path: "/candidate/cv",
-      icon: (
-        <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8h2m-2 4h6" />
-        </svg>
-      ),
-    },
-    {
       label: "Timesheets",
       path: "/candidate/timesheets",
       icon: (

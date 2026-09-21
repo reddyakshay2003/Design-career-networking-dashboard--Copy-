@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // Import the icons from lucide-react
@@ -9,8 +9,7 @@ import {
   Target, 
   MonitorPlay, 
   Users, 
-  FileText,
-  ArrowRight
+  FileText
 } from "lucide-react";
 
 import heroVideo from "./hero-background.mp4";
@@ -19,27 +18,37 @@ const HERO_VIDEO = heroVideo;
 
 const KEYWORDS = ["creative", "design", "engineering"];
 
-const studentProfiles = [
-  { name: "Alex P.", role: "Frontend Developer", degree: "BSc Computer Science", skills: ["React", "TypeScript", "Tailwind"], status: "Actively looking" },
-  { name: "Sarah J.", role: "Data Analyst", degree: "MSc Data Science", skills: ["Python", "SQL", "Tableau"], status: "Placed" },
-  { name: "David M.", role: "Backend Developer", degree: "BSc Software Engineering", skills: ["Node.js", "PostgreSQL", "Docker"], status: "Actively looking" },
-  { name: "Elena R.", role: "Product Designer", degree: "BA Graphic Design", skills: ["Figma", "User Testing", "CSS"], status: "Interviewing" },
-  { name: "James T.", role: "Mobile Developer", degree: "MSc Computer Science", skills: ["React Native", "Swift", "Firebase"], status: "Actively looking" },
-  { name: "Maya K.", role: "Machine Learning", degree: "MSc Artificial Intelligence", skills: ["PyTorch", "TensorFlow", "Python"], status: "Actively looking" },
-];
-
-const testimonials = [
+// Expanded with natural, specific quotes
+const feedback = [
   {
-    quote: "I got my summer placement sorted through here in April. The best part was not having to fill out the exact same massive application form 50 times. My uni advisor just checks my hours directly on the dashboard, so I don't have to email them a spreadsheet every Friday.",
+    quote: "Got my summer placement sorted here in April. The best part was not having to fill out the exact same massive application form 50 times.",
     author: "Leo C.",
     role: "Third-year CS Student",
     img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200"
   },
   {
-    quote: "We brought on two frontend interns last month. Being able to just click through to their Vercel links and GitHub repos instead of reading a generic PDF CV saved us hours. It's straightforward and cuts out a lot of the usual recruitment noise.",
+    quote: "We brought on two frontend interns last month. Being able to just click through to their Vercel links instead of reading a generic PDF CV saved us hours.",
     author: "Amina Y.",
     role: "Engineering Lead @ Studio North",
     img: "https://images.unsplash.com/photo-1531123897727-8f129e1bf98c?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    quote: "Approving timesheets takes five minutes now. I used to spend my entire Friday afternoon chasing students for email updates.",
+    author: "Dr. Jenkins",
+    role: "Academic Advisor",
+    img: "https://images.unsplash.com/photo-1580894732444-8ecded790047?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    quote: "Found a freelance design gig that fits around my lectures perfectly. Much better than scrolling through generic job boards hoping someone replies.",
+    author: "Sam K.",
+    role: "BA Graphic Design",
+    img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    quote: "The skill tagging actually works. When we filter for React Native, we only see students who have actually pushed code in it.",
+    author: "Marcus T.",
+    role: "CTO @ Vortex",
+    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&q=80&w=200"
   }
 ];
 
@@ -47,6 +56,16 @@ export default function LandingPage() {
   const [isDark, setIsDark] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeKeywordIndex, setActiveKeywordIndex] = useState(0);
+  const videoRef = useRef(null);
+
+  // Force video playback for strict Safari policies
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.warn("Safari auto-play prevention triggered:", error);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (isDark) {
@@ -80,8 +99,13 @@ export default function LandingPage() {
       <header className="relative h-screen flex flex-col justify-center overflow-hidden bg-zinc-900">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <video 
-            autoPlay muted loop playsInline
-            className="w-full h-full object-cover"
+            ref={videoRef}
+            autoPlay 
+            muted 
+            defaultMuted
+            loop 
+            playsInline
+            className="w-full h-full object-cover blur-sm scale-105"
           >
             <source src={HERO_VIDEO} type="video/mp4" />
           </video>
@@ -257,83 +281,40 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Available Students Section */}
-        <section className="py-24 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
-              <div>
-                <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">
-                  Available students
-                </h2>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm">
-                  A snapshot of the people currently looking for placement years or summer internships.
-                </p>
-              </div>
-              
-              <Link 
-                to="/candidates" 
-                className="text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 flex items-center transition-colors group"
-              >
-                View full directory 
-                <ArrowRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {studentProfiles.map((student, i) => (
-                <div key={i} className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 flex flex-col">
-                  
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center font-medium text-zinc-600 dark:text-zinc-300 text-sm">
-                      {student.name.charAt(0)}
+        {/* Horizontal Scrolling Feedback */}
+        <section className="py-24 border-t border-zinc-200 dark:border-zinc-800/60">
+          <div className="max-w-6xl mx-auto px-6 mb-10">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+              What people say
+            </h2>
+          </div>
+          
+          <div className="max-w-6xl mx-auto px-6">
+            {/* The scrollable row */}
+            <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden">
+              {feedback.map((item, i) => (
+                <div 
+                  key={i} 
+                  className="flex-none w-[85vw] sm:w-[350px] snap-center sm:snap-start bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 flex flex-col"
+                >
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed mb-6">
+                    "{item.quote}"
+                  </p>
+                  <div className="flex items-center gap-3 mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-800/60">
+                    <img 
+                      src={item.img} 
+                      alt={item.author} 
+                      className="w-10 h-10 rounded-full object-cover bg-zinc-100 dark:bg-zinc-800" 
+                      loading="lazy"
+                    />
+                    <div>
+                      <div className="font-medium text-sm text-zinc-900 dark:text-zinc-100">{item.author}</div>
+                      <div className="text-xs text-zinc-500 dark:text-zinc-400">{item.role}</div>
                     </div>
-                    <span className={`text-[11px] px-2.5 py-1 rounded-md font-medium border ${
-                      student.status === 'Placed' 
-                        ? 'bg-zinc-50 text-zinc-500 border-zinc-200 dark:bg-zinc-800/50 dark:text-zinc-400 dark:border-zinc-700/50' 
-                        : student.status === 'Interviewing'
-                        ? 'bg-amber-50 text-amber-700 border-amber-200/60 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'
-                        : 'bg-green-50 text-green-700 border-green-200/60 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20'
-                    }`}>
-                      {student.status}
-                    </span>
                   </div>
-                  
-                  <h3 className="font-medium text-zinc-900 dark:text-zinc-100 mb-0.5">{student.name}</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-1">{student.role}</p>
-                  <p className="text-xs text-zinc-500 mb-5">{student.degree}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mt-auto pt-2">
-                    {student.skills.map(skill => (
-                      <span key={skill} className="text-[11px] bg-zinc-100 dark:bg-zinc-800/80 px-2 py-1 rounded-md text-zinc-600 dark:text-zinc-300 font-medium">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Feedback / Testimonials */}
-        <section className="py-24 px-6 max-w-4xl mx-auto border-t border-zinc-200 dark:border-zinc-800/60">
-          <h2 className="text-2xl font-bold mb-12 text-center text-zinc-900 dark:text-zinc-100">
-            Feedback from people using it.
-          </h2>
-          <div className="grid md:grid-cols-2 gap-12 md:gap-8">
-            {testimonials.map((t, i) => (
-              <div key={i} className="flex flex-col gap-4">
-                <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">"{t.quote}"</p>
-                <div className="flex items-center gap-3 mt-auto pt-4">
-                  <img src={t.img} alt={t.author} className="w-10 h-10 rounded-full object-cover bg-zinc-200 dark:bg-zinc-800" />
-                  <div>
-                    <div className="font-medium text-sm text-zinc-900 dark:text-zinc-100">{t.author}</div>
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 
@@ -356,7 +337,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* REWRITTEN: Minimal Footer */}
+      {/* Minimal Footer */}
       <footer className="py-12 px-6 border-t border-zinc-200 dark:border-zinc-800/60 mt-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">

@@ -60,7 +60,7 @@ const APPLICATIONS = [
     location: "London, UK",
     appliedDate: "Aug 10, 2026",
     lastUpdated: "Aug 18, 2026",
-    status: "Rejected",
+    status: "Unfortunate",
     nextStep: "Role closed",
   },
 ];
@@ -71,10 +71,10 @@ const STATUS_CONFIG: Record<string, { bg: string; text: string; border: string }
   Shortlisted: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
   Interview: { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
   Offered: { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
-  Rejected: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
+  Unfortunate: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
 };
 
-const TABS = ["All", "Applied", "Under Review", "Shortlisted", "Interview", "Offered", "Rejected"];
+const TABS = ["All", "Applied", "Under Review", "Shortlisted", "Interview", "Offered", "Unfortunate"];
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function ApplicationTracker() {
@@ -85,7 +85,7 @@ export default function ApplicationTracker() {
     : APPLICATIONS.filter(app => app.status === activeTab);
 
   // Calculate high-level metrics
-  const activeCount = APPLICATIONS.filter(a => !["Offered", "Rejected"].includes(a.status)).length;
+  const activeCount = APPLICATIONS.filter(a => !["Offered", "Unfortunate"].includes(a.status)).length;
   const interviewCount = APPLICATIONS.filter(a => a.status === "Interview" || a.status === "Shortlisted").length;
   const offerCount = APPLICATIONS.filter(a => a.status === "Offered").length;
 

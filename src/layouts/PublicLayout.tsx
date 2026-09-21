@@ -48,18 +48,6 @@ export default function PublicLayout() {
       <main className="flex-1">
         <Outlet />
       </main>
-
-      {/* Professional Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 py-8 text-xs text-zinc-500 dark:text-zinc-400 transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} Docklands Creative. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Support</a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
