@@ -1,0 +1,77 @@
+export const opportunities = [
+  {
+    id: 1,
+    company: "Studio North",
+    logo: "SN",
+    role: "Frontend Developer (Placement Year)",
+    type: "Placement",
+    location: "London",
+    workStyle: "Hybrid",
+    salary: "£24,000 pro rata",
+    tags: ["React", "TypeScript", "Tailwind"],
+    deadlineDisplay: "15 Oct 2026",
+    deadlineDate: "2026-10-15",
+    dateAdded: "2026-09-01",
+
+    overview:
+      "Studio North is looking for a motivated frontend developer to join its engineering team during a placement year.",
+
+    responsibilities: [
+      "Build responsive web applications using React and TypeScript.",
+      "Work with designers and developers to deliver new features.",
+      "Write clean and maintainable frontend code.",
+      "Test and debug applications.",
+      "Participate in team meetings and code reviews."
+    ],
+
+    requirements: [
+      "Knowledge of React and TypeScript.",
+      "Understanding of responsive web development.",
+      "Basic knowledge of Git and version control.",
+      "Good communication and teamwork skills."
+    ],
+
+    qualifications: [
+      "Currently studying Computer Science, Software Engineering or a related subject.",
+      "Available for a placement year."
+    ]
+  },
+
+  {
+    id: 5,
+    company: "Deliveroo",
+    logo: "D",
+    role: "Backend Engineering Intern",
+    type: "Internship",
+    location: "London",
+    workStyle: "Hybrid",
+    salary: "£2,500 / month",
+    tags: ["Node.js", "Go", "AWS"],
+    deadlineDisplay: "12 Oct 2026",
+    deadlineDate: "2026-10-12",
+    dateAdded: "2026-09-18",
+
+    overview:
+      "Join Deliveroo's engineering team as a Backend Engineering Intern and gain practical experience building reliable backend services.",
+
+    responsibilities: [
+      "Develop and maintain backend services.",
+      "Work with engineers to design and implement new features.",
+      "Write clean, reliable and testable code.",
+      "Investigate bugs and improve application performance.",
+      "Participate in code reviews and technical discussions."
+    ],
+
+    requirements: [
+      "Basic knowledge of Node.js or Go.",
+      "Understanding of APIs and backend development.",
+      "Familiarity with AWS or cloud technologies.",
+      "Good problem-solving skills."
+    ],
+
+    qualifications: [
+      "Currently studying Computer Science, Software Engineering or a related subject.",
+      "Interest in backend engineering and cloud technologies."
+    ]
+  }
+];
